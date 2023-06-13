@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import UserCard from '@/components/UserCard.vue'
+import UserCard from '@/components/pages/UserCard.vue'
 
 const routes = [
     {
