@@ -66,12 +66,6 @@ $hover-color: #E0E0E0;
 $white:  #FFFFFF;
 $radius: 10px;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 .card-btn {
     display: flex;
     flex-direction: row;
@@ -99,14 +93,10 @@ $radius: 10px;
     word-wrap: break-word;
     border-left: 1px solid $hover-color;
 
-    P {
-        margin: 0 15px;
-    }
-
     p:first-child {
         font-weight: 600;
         color: $title-color;
-        margin: 15px 0 5px 15px;
+        margin: 15px 0 5px;
     }
 
     p:last-child {

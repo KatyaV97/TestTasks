@@ -90,12 +90,6 @@ $font-stack: 'Montserrat', sans-serif;
 $title-color: #333333;
 $grey-color: #76787D;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 .my-sidebar {
     display: flex;
     flex-direction: column;
@@ -103,6 +97,8 @@ $grey-color: #76787D;
     font-style: normal;
 
     padding-right: 30px;
+
+
 }
 
 .employees-search {

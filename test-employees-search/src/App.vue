@@ -4,7 +4,7 @@
       <h1>Жилфонд</h1>
       <h2>Пользователь</h2>
     </div>
-    <div class="main">
+    <div class="main  ">
       <Sidebar />
       <router-view />
     </div>
@@ -15,7 +15,7 @@
 import Sidebar from '@/components/pages/Sidebar.vue'
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 $font-stack: 'Montserrat', sans-serif;
 $primary-color: #F5F5F5;
 $red-color: #E31F24;
@@ -73,12 +73,15 @@ $title-color:#333333;
 
 .main {
   @include flexibleRow ();
+
   height: 575px;
   width: 100%;
-  max-width: 100%;
   padding-left: 20px;
   background: #FDFDFD;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
+
+  width:auto;
+  max-width:100%;
 }
 </style>

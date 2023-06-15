@@ -40,12 +40,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 $font-stack: 'Montserrat', sans-serif;
 $light-color: #FDFDFD;
 $grey-color: #76787D;
@@ -54,6 +48,7 @@ $grey-color: #76787D;
     display: flex;
     flex-direction: row;
 }
+
 
 .user-card {
     font-family: $font-stack;
@@ -73,6 +68,9 @@ $grey-color: #76787D;
     h1 {
         font-size: 16px;
         line-height: 140%;
+
+        margin: 0;
+        padding: 0;
     }
  
     p{
@@ -105,7 +103,6 @@ $grey-color: #76787D;
     }
 }
 
-
 .hint {
     @include flexible ();
     justify-content: space-around;
@@ -122,7 +119,6 @@ $grey-color: #76787D;
 
 .profile-info {
     @include flexible ();
-
     padding: 30px 30px;
 }
 
