@@ -3,27 +3,25 @@ export default {
         async fetchEmployees({ commit }, parametersList) {
             commit('setLoading', true);
             commit('setUpdateParametersEnd', false);
-
+            
             let request = "https://jsonplaceholder.typicode.com/users/";
             let employees = [];
 
             if (!isNaN(+parametersList[0])) {
                 request += parametersList[0];
 
-                //fetch(request).then(response => employees.push(response.json()))
-
                 const response = await fetch(request);
-                // console.log(response.ok)
+
                 if (response.ok) {
                     employees.push(await response.json());
                 } else {
                     alert("Ошибка сервера: " + response.status)
                 }
-
             } else {
                 request += "?";
 
                 parametersList.forEach(parameter => {
+                    console.log("parameter"+ parameter)
                     request += "username=" + parameter + "&";
                 });
 

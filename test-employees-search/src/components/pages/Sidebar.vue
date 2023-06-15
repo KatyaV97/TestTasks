@@ -5,12 +5,12 @@
             <input type="text" id="inputText" placeholder="Введите Id или имя" name="user" v-model="inputText"
                 @keyup.enter="updateEmployeesList" />
         </div>
-        <div v-show="isLoading">
-            <div class="spiner-border">
-                <span class="sr-only">Loading...</span>
+        <div v-if="isLoading">
+            <div>
+                <span>Loading...</span>
             </div>
         </div>
-        <div class="search-result" v-show="!isLoading">
+        <div v-else class="search-result">
             <h1>Результаты</h1>
             <div v-if="allEmployees.length > 0" class="employees">
                 <div v-for="employee in allEmployees" :key="employee.id">
@@ -30,7 +30,6 @@
 <script>
 import EmployeeCard from '@/components/cards/EmployeeCard.vue'
 import { mapGetters, mapActions, mapMutations } from 'vuex'
-import $ from 'jquery';
 
 export default {
     components: {
@@ -47,8 +46,7 @@ export default {
     },
     methods: {
         ...mapActions(['fetchEmployees']),
-        ...mapMutations(['clearEmployees']),
-        ...mapMutations(['clearSelectedParameterId']),
+        ...mapMutations(['clearEmployees', 'clearSelectedParameterId']),
         updateEmployeesList() {
             this.isUpdateParameters = false;
 
@@ -72,15 +70,21 @@ export default {
 
                 if (foundPosition == -1) {
                     searchList.push(this.inputText.slice(position).trim());
+                    console.log(searchList)
                     break;
                 }
 
-                searchList.push(this.inputText.slice(position, foundPosition).trim());
+                let searchItem = this.inputText.slice(position, foundPosition).trim();
+
+                if (searchItem !== "" && searchItem !== null && searchItem !== undefined) {
+                    searchList.push(searchItem);
+                }
+
                 position = foundPosition + 1;
             }
 
             return searchList;
-        },
+        }
     }
 }
 </script>
@@ -89,16 +93,23 @@ export default {
 $font-stack: 'Montserrat', sans-serif;
 $title-color: #333333;
 $grey-color: #76787D;
+$border-color: #E9ECEF;
+$light-color: #FDFDFD;
 
-.my-sidebar {
+@mixin flexible () {
     display: flex;
     flex-direction: column;
+}
+
+.my-sidebar {
+    @include flexible();
+
     font-family: $font-stack;
     font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
 
     padding-right: 30px;
-
-
 }
 
 .employees-search {
@@ -113,25 +124,21 @@ $grey-color: #76787D;
     }
 
     input {
+        line-height: 17px;
+
         padding: 16px 24px;
         margin-bottom: 29px;
-        gap: 16px;
-
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 17px;
 
         width: 240px;
 
         color: $grey-color;
-        border: 1.5px solid #E9ECEF;
+        border: 1.5px solid $border-color;
         border-radius: 8px;
     }
 }
 
 .search-result {
     h1 {
-        font-style: normal;
         font-weight: 600;
         font-size: 16px;
         line-height: 140%;
@@ -142,8 +149,6 @@ $grey-color: #76787D;
     }
 
     p {
-        font-weight: 400;
-        font-size: 14px;
         line-height: 17px;
 
         color: $grey-color;
@@ -153,12 +158,6 @@ $grey-color: #76787D;
 }
 
 .my-sidebar {
-    background: #FDFDFD;
-}
-
-.spiner-border {
-    width: 8rem;
-    height: 8rem;
-
+    background: $light-color;
 }
 </style>

@@ -4,14 +4,14 @@
             <img src="@/img/ImgSmall.png" />
         </div>
         <div class="employee-info" :id=employee.id>
-            <p>{{ employee.name }}</p>
+            <p>{{ employee.username }}</p>
             <p>{{ employee.email }}</p>
         </div>
     </button>
 </template>
 
 <script>
-import { mapGetters, mapActions, mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import $ from 'jquery'
 
 export default {
@@ -25,19 +25,10 @@ export default {
         employee: {
             type: Object,
             default: {}
-        },
-        selectedEmployeeId: {
-            type: String,
-            default: ''
         }
     },
-    created() {
-        let id = String(this.employee.id);
-        
-    },
     computed: {
-        ...mapGetters(['selectedEmployee','selectedId'])     
-     
+        ...mapGetters(['selectedEmployee', 'selectedId'])
     },
     methods: {
         ...mapMutations(['updateSelectedEmployeeId']),
@@ -45,13 +36,13 @@ export default {
             this.updateSelectedEmployeeId(this.employee.id);
         }
     },
-    watch:{
-        selectedId(){
-            let employeeInfo = $('#' + this.employee.id);
+    watch: {
+        selectedId() {
+            const employeeInfo = $('#' + this.employee.id);
 
-            if(this.selectedId === this.employee.id){
+            if (this.selectedId === this.employee.id) {
                 employeeInfo.addClass('selected-card');
-            }else{
+            } else {
                 employeeInfo.removeClass('selected-card');
             }
         }
@@ -63,14 +54,17 @@ export default {
 $title-color: #333333;
 $grey-color: #76787D;
 $hover-color: #E0E0E0;
-$white:  #FFFFFF;
+$white: #FFFFFF;
 $radius: 10px;
 
+@mixin flexible () {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 .card-btn {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
+    @include flexible();    
 
     font-style: normal;
 
@@ -93,16 +87,20 @@ $radius: 10px;
     word-wrap: break-word;
     border-left: 1px solid $hover-color;
 
+    p {
+        text-align: start;
+        margin: 15px 15px 5px;
+    }
+
     p:first-child {
         font-weight: 600;
         color: $title-color;
-        margin: 15px 0 5px;
     }
 
     p:last-child {
         font-weight: 400;
         color: $grey-color;
-        margin-bottom: 15px;
+        margin: 0 15px 15px;
     }
 }
 
@@ -120,7 +118,7 @@ $radius: 10px;
     border-radius: 0 $radius $radius 0;
 }
 
-.selected-card{
+.selected-card {
     background: $hover-color;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 0 $radius $radius 0;

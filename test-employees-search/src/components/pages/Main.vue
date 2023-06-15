@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
     computed: {
@@ -42,23 +42,25 @@ export default {
 <style lang="scss" scoped>
 $font-stack: 'Montserrat', sans-serif;
 $light-color: #FDFDFD;
+$border-color:#E0E0E0;
 $grey-color: #76787D;
+$black: #000000;
+$radius: 10px;
 
 @mixin flexible () {
     display: flex;
     flex-direction: row;
 }
 
-
 .user-card {
     font-family: $font-stack;
     font-style: normal;
     font-weight: 600;
-    color: #000000;
+    color: $black;
 
     background: $light-color;
-    border-left: 1px solid #E0E0E0;
-    border-radius: 0px 10px 10px 0px;
+    border-left: 1px solid $border-color;
+    border-radius: 0px $radius $radius 0px;
 
     width: 100%;
 }
@@ -72,23 +74,23 @@ $grey-color: #76787D;
         margin: 0;
         padding: 0;
     }
- 
-    p{
+
+    p {
         font-weight: 400;
         font-size: 14px;
-        line-height: 17px;        
+        line-height: 17px;
 
-        color: #76787D;
-    }    
+        color: $grey-color;
+    }
 
     span {
         font-weight: 600;
-        color: #000000;
+        color: $black;
     }
 }
 
-.short-info{
-    p{
+.short-info {
+    p {
         margin-top: 10px;
     }
 
@@ -97,7 +99,7 @@ $grey-color: #76787D;
     }
 }
 
-.about{
+.about {
     h1 {
         margin-bottom: 25px;
     }
@@ -105,6 +107,7 @@ $grey-color: #76787D;
 
 .hint {
     @include flexible ();
+
     justify-content: space-around;
     align-items: center;
     width: 100%;
@@ -119,6 +122,7 @@ $grey-color: #76787D;
 
 .profile-info {
     @include flexible ();
+
     padding: 30px 30px;
 }
 
@@ -128,6 +132,6 @@ $grey-color: #76787D;
 
     margin-right: 61px;
 
-    border: 1px solid #E0E0E0;
+    border: 1px solid $border-color;
 }
 </style>
