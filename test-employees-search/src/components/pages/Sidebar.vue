@@ -1,42 +1,40 @@
 <template>
-    <aside class="my-sidebar" >
+    <aside class="my-sidebar">
         <div class="employees-search">
             <h1>Поиск сотрудников</h1>
-            <input type="text" id="inputText" placeholder="Введите id или имя" name="user" v-model="inputText"
+            <input type="text" id="inputText" placeholder="Введите Id или имя" name="user" v-model="inputText"
                 @keyup.enter="updateEmployeesList" />
         </div>
         <div v-show="isLoading">
-            <!-- <div class="spiner-border">
+            <div class="spiner-border">
                 <span class="sr-only">Loading...</span>
-            </div> -->
-            <preloader/>
+            </div>
         </div>
-        <div class="search-result"  v-show="!isLoading">
+        <div class="search-result" v-show="!isLoading">
             <h1>Результаты</h1>
             <div v-if="allEmployees.length > 0" class="employees">
                 <div v-for="employee in allEmployees" :key="employee.id">
-                    <employeeCard :employee="employee" :selectedEmployeeId="selectedEmployee.id"></employeeCard>
+                    <EmployeeCard :employee="employee" :selectedEmployeeId="selectedEmployee.id"></EmployeeCard>
                 </div>
             </div>
-           <div v-else-if="allEmployees.length == 0 && isUpdateParametersEnd">
+            <div v-else-if="allEmployees.length == 0 && isUpdateParametersEnd">
                 <p id="hint">ничего не найдено</p>
             </div>
-            <div v-else-if=" inputText.length == 0">
+            <div v-else-if="inputText.length == 0">
                 <p id="hint">начните поиск</p>
-            </div> 
+            </div>
         </div>
     </aside>
 </template>
 
 <script>
-import employeeCard from '@/components/cards/EmployeeCard.vue'
-import preloader from '@/components/loader/Preloader.vue'
+import EmployeeCard from '@/components/cards/EmployeeCard.vue'
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import $ from 'jquery';
 
 export default {
     components: {
-        employeeCard, preloader
+        EmployeeCard
     },
     data() {
         return {
@@ -51,11 +49,10 @@ export default {
         ...mapActions(['fetchEmployees']),
         ...mapMutations(['clearEmployees']),
         ...mapMutations(['clearSelectedParameterId']),
-         updateEmployeesList() {  
+        updateEmployeesList() {
             this.isUpdateParameters = false;
 
             this.clearSelectedParameterId();
-            const hint = $("#hint");
             this.inputText.trim();
 
             if (this.inputText === "" || this.inputText === undefined || this.inputText === null) {
@@ -64,10 +61,6 @@ export default {
             } else {
                 const parametersList = this.getParametersList()
                 this.fetchEmployees(parametersList);
-           }
-
-            if(this.isLoading && this.allEmployees.length == 0){
-                hint.text("ничего не найдено")
             }
         },
         getParametersList() {
@@ -87,54 +80,88 @@ export default {
             }
 
             return searchList;
-         },
+        },
     }
 }
 </script>
 
 <style lang="scss" scoped>
-aside {
+$font-stack: 'Montserrat', sans-serif;
+$title-color: #333333;
+$grey-color: #76787D;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.my-sidebar {
     display: flex;
     flex-direction: column;
-}
-
-.employees-search h1,
-.search-result h1 {
+    font-family: $font-stack;
     font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 140%;
-    margin-top: 20px;
 
-    color: #333333;
+    padding-right: 30px;
 }
 
-.employees-search input {
-    align-items: center;
-    padding: 16px;
-    gap: 16px;
-    margin-top: 20px;
+.employees-search {
+    h1 {
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 140%;
 
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
+        color: $title-color;
 
-    width: 240px;
-    height: 46px;
+        margin: 27px 0 22px;
+    }
 
+    input {
+        padding: 16px 24px;
+        margin-bottom: 29px;
+        gap: 16px;
 
-    background: #FFFFFF;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
 
-    border: 1.5px solid #E9ECEF;
-    border-radius: 8px;
+        width: 240px;
+
+        color: $grey-color;
+        border: 1.5px solid #E9ECEF;
+        border-radius: 8px;
+    }
+}
+
+.search-result {
+    h1 {
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 140%;
+
+        color: $title-color;
+
+        margin: 0;
+    }
+
+    p {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+
+        color: $grey-color;
+
+        margin: 10px 0;
+    }
 }
 
 .my-sidebar {
     background: #FDFDFD;
 }
 
-.spiner-border{
-    width:8rem;
+.spiner-border {
+    width: 8rem;
     height: 8rem;
 
 }

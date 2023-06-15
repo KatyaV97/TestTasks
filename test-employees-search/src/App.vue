@@ -1,7 +1,13 @@
 <template>
   <div class="app">
-    <Sidebar />
-    <router-view />
+    <div class="header">
+      <h1>Жилфонд</h1>
+      <h2>Пользователь</h2>
+    </div>
+    <div class="main">
+      <Sidebar />
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -10,49 +16,69 @@ import Sidebar from '@/components/pages/Sidebar.vue'
 </script>
 
 <style lang="scss">
-:root {
-  --primary: #4ade80;
-  --primary-alt: #22c55e;
-  --light: #f1f5f9;
-  --light-grey:#F5F5F5;
-  --sidebar-width: 300px; 
+$font-stack: 'Montserrat', sans-serif;
+$primary-color: #F5F5F5;
+$red-color: #E31F24;
+$title-color:#333333;
+
+@mixin flexibleRow () {
+    display: flex;
+    flex-direction: row;
 }
 
+@mixin flexibleColumn () {
+    display: flex;
+    flex-direction: column;
+}
+
+// _reset.scss
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Montserrat';
-}
-
-body {
-  background: var(--light);
-}
-
-button {
-  cursor: pointer;
-  appearance: none;
-  border: none;
-  outline: none;
-  background: none;
 }
 
 .app {
-  display: flex;
-  background:var(--light-grey);
-  margin-top:  120px;
-  margin-left: 50px;
+  @include flexibleColumn();
+  font-family: $font-stack;
+  background-color: $primary-color;
+  font-style: normal;
+  padding: 46px 50px 58px 55px;
+  width: 1366px;
+}
+
+.header {
+  @include flexibleRow ();
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom:30px;
+
+  h1 {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 39px;
+    color: $red-color;
+    margin: 0;
+  }
+
+  h2 {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    color: $title-color;
+    padding-top: 4px;
+    margin: 0;
+  }
+}
+
+.main {
+  @include flexibleRow ();
+  height: 575px;
+  width: 100%;
+  max-width: 100%;
+  padding-left: 20px;
+  background: #FDFDFD;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  padding: 2rem;
-
-  main {
-    flex: 1 1 0;
-    padding: 2rem;
-
-    @media(max-width:768px){
-      padding-left: 6rem;
-    }
-  }
 }
 </style>

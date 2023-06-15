@@ -1,6 +1,6 @@
 export default {
     actions: {
-        async fetchEmployees({commit}, parametersList) {
+        async fetchEmployees({ commit }, parametersList) {
             commit('setLoading', true);
             commit('setUpdateParametersEnd', false);
 
@@ -10,8 +10,16 @@ export default {
             if (!isNaN(+parametersList[0])) {
                 request += parametersList[0];
 
-                const respons = await fetch(request);
-                employees.push(await respons.json());
+                //fetch(request).then(response => employees.push(response.json()))
+
+                const response = await fetch(request);
+                // console.log(response.ok)
+                if (response.ok) {
+                    employees.push(await response.json());
+                } else {
+                    alert("Ошибка сервера: " + response.status)
+                }
+
             } else {
                 request += "?";
 
@@ -19,20 +27,22 @@ export default {
                     request += "username=" + parameter + "&";
                 });
 
-                const respons = await fetch(request);
-                employees = await respons.json();
+                const response = await fetch(request);
+
+                if (response.ok) {
+                    employees = await response.json();
+                } else {
+                    alert("Ошибка сервера: " + response.status)
+                }
             }
 
             commit('updateEmployees', employees);
             commit('setLoading', false);
             commit('setUpdateParametersEnd', true);
         },
-        updateSelectedEmployee({commit}, id) {
+        updateSelectedEmployee({ commit }, id) {
             commit('updateSelectedEmployeeId', id);
         },
-        // setLoading({commit}){
-        //     commit('setLoading', true);
-        // }
     },
     mutations: {
         updateEmployees(state, employees) {
@@ -41,17 +51,17 @@ export default {
         updateSelectedEmployeeId(state, id) {
             state.selectedId = id;
         },
-        clearEmployees(state){
+        clearEmployees(state) {
             state.employees = [];
             state.isUpdateParametersEnd = false;
         },
-        clearSelectedParameterId(state){
+        clearSelectedParameterId(state) {
             state.selectedId = 0;
         },
-        setLoading(state, isLoadingState){
+        setLoading(state, isLoadingState) {
             state.isLoading = isLoadingState;
         },
-        setUpdateParametersEnd(state, isUpdateParametersEndState){
+        setUpdateParametersEnd(state, isUpdateParametersEndState) {
             state.isUpdateParametersEnd = isUpdateParametersEndState;
         },
     },
@@ -60,7 +70,7 @@ export default {
         selectedId: 0,
         selectedEmployeeInfo: [],
         isLoading: false,
-        isUpdateParametersEnd:false,
+        isUpdateParametersEnd: false,
     },
     getters: {
         allEmployees(state) {
@@ -71,11 +81,14 @@ export default {
 
             return state.selectedEmployeeInfo;
         },
-        isLoading(state){
+        isLoading(state) {
             return state.isLoading;
         },
-        isUpdateParametersEnd(state){
+        isUpdateParametersEnd(state) {
             return state.isUpdateParametersEnd;
+        },
+        selectedId(state) {
+            return state.selectedId;
         }
     },
 }

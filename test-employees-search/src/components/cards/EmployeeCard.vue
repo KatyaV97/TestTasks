@@ -1,13 +1,11 @@
 <template>
     <button class="card-btn" @click="openUserCard">
-        <div class="card">
-            <div class="employee-img">
-                <img />
-            </div>
-            <div class="employee-info">
-                <p>{{ employee.name }}</p>
-                <p>{{ employee.email }}</p>
-            </div>
+        <div class="employee-img">
+            <img src="@/img/ImgSmall.png" />
+        </div>
+        <div class="employee-info" :id=employee.id>
+            <p>{{ employee.name }}</p>
+            <p>{{ employee.email }}</p>
         </div>
     </button>
 </template>
@@ -18,9 +16,9 @@ import $ from 'jquery'
 
 export default {
     name: 'employee-card',
-    data(){
+    data() {
         return {
-            employeeInfo:'',
+            employeeInfo: '',
         }
     },
     props: {
@@ -33,79 +31,93 @@ export default {
             default: ''
         }
     },
-    mounted(){
-        this.employeeInfo = $(".employee-info");
+    created() {
+        let id = String(this.employee.id);
+        
     },
     computed: {
-        ...mapGetters(['selectedEmployee'])
+        ...mapGetters(['selectedEmployee','selectedId'])     
+     
     },
     methods: {
         ...mapMutations(['updateSelectedEmployeeId']),
         openUserCard() {
-            this.updateSelectedEmployeeId(this.employee.id);            
+            this.updateSelectedEmployeeId(this.employee.id);
         }
     },
+    watch:{
+        selectedId(){
+            let employeeInfo = $('#' + this.employee.id);
+
+            if(this.selectedId === this.employee.id){
+                employeeInfo.addClass('selected-card');
+            }else{
+                employeeInfo.removeClass('selected-card');
+            }
+        }
+    }
 }
 </script>
 
 <style lang="scss" scoped>
-.card {
+$title-color: #333333;
+$grey-color: #76787D;
+$hover-color: #E0E0E0;
+$white:  #FFFFFF;
+$radius: 10px;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.card-btn {
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+    font-style: normal;
 
     width: 240px;
     max-width: 240px;
-    height: 70px;
-    
+    height: 100%;
+    min-height: 70px;
+    margin: 18px 0;
 
-    background: #FFFFFF;
+    background: $white;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
-}
-
-.card p {
-    font-family: 'Montserrat';
-    font-size: 14px;
-    line-height: 17px;
+    border-radius: $radius;
+    border: none;
 }
 
 .employee-info {
     width: 100%;
-    max-width: 100%;
-    padding: 12px;
+    max-width: 170px;
+    min-height: 75px;
     word-wrap: break-word;
-}
+    border-left: 1px solid $hover-color;
 
-.employee-info p:first-child {
-    margin-bottom: 6px;
-    font-style: normal;
-    font-weight: 600;
+    P {
+        margin: 0 15px;
+    }
 
-    color: #333333;
-}
+    p:first-child {
+        font-weight: 600;
+        color: $title-color;
+        margin: 15px 0 5px 15px;
+    }
 
-.employee-info p:last-child {
-
-    font-style: normal;
-    font-weight: 400;
-    /* identical to box height */
-
-    color: #76787D;
+    p:last-child {
+        font-weight: 400;
+        color: $grey-color;
+        margin-bottom: 15px;
+    }
 }
 
 .employee-img {
-    min-width: 70px;
     width: 70px;
-    height: 70px;
-
-    border-right: 1px solid #E0E0E0;
-}
-
-.card-btn {
-    width: 241px;
-    height: 70px;
-    border-radius: 0px 10px 10px 0px;
-    margin-top: 12px;
 }
 
 .card-btn:hover {
@@ -113,9 +125,14 @@ export default {
 }
 
 .employee-info:hover {
-    background: #E0E0E0;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 0px 10px 10px 0px;
+    background: $hover-color;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0 $radius $radius 0;
 }
 
+.selected-card{
+    background: $hover-color;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0 $radius $radius 0;
+}
 </style>
