@@ -18,8 +18,12 @@ module.exports = {
 
         return newUser;
     },
-    removeById: ({ id }) => { },
-    removeByUsername: ({ id }) => { },
+    removeById: ({ id }) => {
+
+     },
+    removeByUsername: ({ id }) => { 
+        
+    },
     getAll: () => {
         return users;
     },
