@@ -18,7 +18,9 @@ module.exports = {
 
         return newUser;
     },
-    removeById: ({ id }) => { },
+    removeById: ({ id }) => {
+        const userIndex = users.findIndex(user => (user => user.id === String(id)))
+    },
     removeByUsername: ({ id }) => { },
     getAll: () => {
         return users;
